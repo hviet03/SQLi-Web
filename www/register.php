@@ -89,33 +89,48 @@ ini_set('display_errors', 0);
         <div class="col-lg-6">
 
 <?php
-//echo md5("pa55w0rd");
-if (!empty($_REQUEST['uid'])) {
-session_start();
-$username = str_replace("'","''",$_REQUEST['uid']);
-$pass = $_REQUEST['password'];
-$fname = str_replace("'","''",$_REQUEST['name']);
-$descr = str_replace("'","''",$_REQUEST['descr']);
-$id =  rand(20,100);
-
-$q = "INSERT INTO users (id, username, password, fname, description) values (".$id.",'".$username."','".md5($pass)."','".$fname."','".$descr."')" ;
-	
-
-	if (!mysqli_query($con,$q))
-	{
-		echo('Error: ' . mysqli_error($con));
-	}else{
-	
-	
-	$_SESSION["id"] = $id;
-	$_SESSION["fname"] = $fname;
-	
-	ob_clean();
-	header('Location:profIle.php');
-	}
+function containsBlacklistedCharacter($input) {
+    $blacklist = array('||', '|', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'concat', 'null', '.', 'print');
+    foreach ($blacklist as $disallowed) {
+        if (stripos($input, $disallowed) !== false) {
+            return true;
+        }
+    }
+    return false;
 }
-	
+
+if (!empty($_REQUEST['uid'])) {
+    session_start();
+    $username = $_REQUEST['uid'];
+    $pass = $_REQUEST['password'];
+    $fname = $_REQUEST['name'];
+    $descr = $_REQUEST['descr'];
+
+    // Check for blacklisted characters
+    if (containsBlacklistedCharacter($username) || containsBlacklistedCharacter($fname) || containsBlacklistedCharacter($descr)) {
+        echo 'Error: Contains disallowed character';
+        exit();
+    }
+
+    $username = str_replace("'", "''", $username);
+    $fname = str_replace("'", "''", $fname);
+    $descr = str_replace("'", "''", $descr);
+    $id = rand(20, 100);
+
+    $q = "INSERT INTO users (id, username, password, fname, description) values (" . $id . ",'" . $username . "','" . md5($pass) . "','" . $fname . "','" . $descr . "')";
+
+    if (!mysqli_query($con, $q)) {
+        echo('Error: ' . mysqli_error($con));
+    } else {
+        $_SESSION["id"] = $id;
+        $_SESSION["fname"] = $fname;
+
+        ob_clean();
+        header('Location: profIle.php');
+    }
+}
 ?>
+
 
 
 	</div>
