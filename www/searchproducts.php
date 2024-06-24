@@ -58,7 +58,17 @@ if (isset($_POST["searchitem"])) {
 
     // Check if the input contains any of the blacklisted words
     if (
-        stripos($searchitem, 'description') === false &&
+	stripos($searchitem, '1') === false &&
+        stripos($searchitem, '2') === false &&
+        stripos($searchitem, '3') === false &&
+        stripos($searchitem, '4') === false &&
+        stripos($searchitem, '5') === false &&
+        stripos($searchitem, '6') === false &&
+        stripos($searchitem, '7') === false &&
+        stripos($searchitem, '8') === false &&
+        stripos($searchitem, '9') === false &&
+        stripos($searchitem, '0') === false
+	stripos($searchitem, 'description') === false &&
         stripos($searchitem, '*') === false &&
         stripos($searchitem, '=') === false &&
         stripos($searchitem, 'id') === false &&
