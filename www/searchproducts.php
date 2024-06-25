@@ -67,7 +67,7 @@ if (isset($_POST["searchitem"])) {
         stripos($searchitem, '7') === false &&
         stripos($searchitem, '8') === false &&
         stripos($searchitem, '9') === false &&
-        stripos($searchitem, '0') === false
+        stripos($searchitem, '0') === false &&
 	stripos($searchitem, 'description') === false &&
         stripos($searchitem, '*') === false &&
         stripos($searchitem, '=') === false &&
