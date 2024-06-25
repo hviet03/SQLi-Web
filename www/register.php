@@ -90,7 +90,7 @@ ini_set('display_errors', 0);
 
 <?php
 function containsBlacklistedCharacter($input) {
-    $blacklist = array('||', '|', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'concat', 'null', '.', 'print');
+    $blacklist = array('||', '|', '0', '2', '3', '4', '5', '6', '7', '8', '9', 'concat', 'null', '.', 'print', 'UNION', 'union');
     foreach ($blacklist as $disallowed) {
         if (stripos($input, $disallowed) !== false) {
             return true;
